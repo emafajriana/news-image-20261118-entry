@@ -1,10 +1,16 @@
 #!/usr/bin/env python3
 """Entry program for make.fun news-image-20261118.
 
-Validates the bundled front-page picture against the competition
-limits (a whole PNG or JPEG, at most 1 MiB, at most 1024x1024) and
-copies it byte for byte to entry.png in the output directory.
-Standard library only; the copy is deterministic, so two runs write
+The bundled picture is a newspaper front page for Wednesday
+18 November 2026: the date itself as a serif masthead, 3 hero panels
+and 8 small flag-chipped panels (11 pictured stories), and a bottom
+block pairing a world map — numbered pins for the pictured stories —
+with a numbered index of all 40 stories across 6 continents.
+
+This program validates the picture against the competition limits
+(a whole PNG or JPEG, at most 1 MiB, at most 1024x1024) and copies
+it byte for byte to entry.png in the output directory. Standard
+library only; the copy is deterministic, so two runs write
 identical bytes.
 """
 
@@ -15,6 +21,11 @@ import sys
 
 MAX_BYTES = 1048576
 MAX_DIM = 1024
+
+EDITION = "Wednesday 18 November 2026"
+STORIES = 40
+CONTINENTS = 6
+PICTURED = 11
 
 
 def fail(message):
@@ -89,6 +100,8 @@ def main():
         fail("written file does not match the bundled image")
     print("wrote %s (%s, %dx%d, %d bytes, sha256 %s)"
           % (target, kind, width, height, len(data), digest))
+    print("edition: %s — %d stories, %d pictured, %d continents"
+          % (EDITION, STORIES, PICTURED, CONTINENTS))
 
 
 if __name__ == "__main__":
